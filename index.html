@@ -2,133 +2,100 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Quer sair comigo?</title>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <title>Página com Vídeo do YouTube</title>
     <link
-      rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
       integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
       crossorigin="anonymous"
     />
     <style>
-      .label {
-        margin-bottom: 20px;
-        font-size: 30px;
-      }
-
-      #yes {
-        margin-top: 20px;
-        font-size: 20px;
-      }
-
-      #no {
-        margin-top: 20px;
-        font-size: 20px;
-      }
-
-      .center {
+      /* Estilo geral para centralizar tudo */
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
         margin: 0;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        -ms-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
+        background-color: #f8f9fa;
+      }
+
+      .container {
+        text-align: center;
+        padding: 20px;
+        max-width: 800px;
+        width: 100%;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        color: #333;
+        margin-bottom: 20px;
+      }
+
+      p {
+        font-size: 1.5rem;
+        color: #555;
+        margin-bottom: 30px;
+      }
+
+      .video-container {
+        max-width: 100%;
+        aspect-ratio: 16/9;
+        margin-bottom: 30px;
+      }
+
+      .btn {
+        margin-top: 20px;
       }
     </style>
   </head>
   <body>
-    <!-- Áudio para tocar automaticamente -->
-    <audio id="audioAutoPlay" autoplay>
-      <source src="https://www.myinstants.com/media/sounds/nao-quero-nao-quero.mp3" type="audio/mpeg" />
-      Seu navegador não suporta o elemento de áudio.
-    </audio>
-
-    <div class="center">
-      <div class="label">
-        <p>Quer sair comigo?</p>
+    <div class="container">
+      <!-- Vídeo do YouTube incorporado -->
+      <div class="video-container">
+        <iframe
+          width="100%"
+          height="450"
+          src="https://www.youtube.com/embed/Jvm4-tit-Kk"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
       </div>
 
-      <div
-        class="tenor-gif-embed"
-        data-postid="5228236309973650302"
-        data-share-method="host"
-        data-aspect-ratio="1"
-        data-width="100%"
-      >
-        <a
-          href="https://tenor.com/view/verycat-twitch-cat-twitch-emote-cat-emote-cat-twitch-very-cat-gif-5228236309973650302"
-          >Verycat Twitch Cat Twitch Emote Sticker</a
-        >from
-        <a href="https://tenor.com/search/verycat+twitch-stickers"
-          >Verycat Twitch Stickers</a
-        >
-      </div>
-      <script
-        type="text/javascript"
-        async
-        src="https://tenor.com/embed.js"
-      ></script>
+      <h1>Quer sair comigo?</h1>
 
-      <button id="yes" class="btn btn-primary btn-lg">Sim</button>
-      <button id="no" class="btn btn-secondary btn-lg">Não</button>
+      <div class="text-center">
+        <button id="yes" class="btn btn-primary btn-lg">Sim</button>
+        <button id="no" class="btn btn-secondary btn-lg">Não</button>
+      </div>
     </div>
 
     <script>
-      // Reproduzir áudio ao carregar a página
-      document.addEventListener("DOMContentLoaded", function () {
-        const audio = document.getElementById("audioAutoPlay");
-        audio.play().catch(function (error) {
-          console.log(
-            "O navegador bloqueou o autoplay. O áudio será iniciado após interação do usuário."
-          );
-        });
-      });
-
       // Botão "Não" se move ao clicar
-      $("#no").click(function () {
-        var offset = $("#no").offset();
+      document.getElementById("no").addEventListener("click", function () {
+        const button = document.getElementById("no");
+        const offsetX = Math.random() * 100 - 50; // Movimento horizontal
+        const offsetY = Math.random() * 100 - 50; // Movimento vertical
 
-        var topOffset = getRandomIntInclusive(-50, 50);
-        var leftOffset = getRandomIntInclusive(-50, 50);
-
-        // Ajustar offset do botão
-        var top = offset.top + topOffset;
-        var left = offset.left + leftOffset;
-
-        $("#no").offset({ top: top, left: left });
+        // Ajusta a posição do botão
+        button.style.position = "relative";
+        button.style.left = `${offsetX}px`;
+        button.style.top = `${offsetY}px`;
       });
 
-      // Botão "Sim" redireciona para WhatsApp
-      $("#yes").click(function () {
-        // Redirecionamento para o WhatsApp
-        var numeroTelefone = "+5511940314559"; // Insira seu número de telefone aqui
-        var mensagem = "Sim meu gatão, vamos sair!"; // Mensagem pré-definida
-
-        // Construção da URL do WhatsApp
-        var url =
-          "https://api.whatsapp.com/send?phone=" +
-          numeroTelefone +
-          "&text=" +
-          encodeURIComponent(mensagem);
-
-        // Redirecionar para a URL do WhatsApp
+      // Botão "Sim" redireciona para o WhatsApp
+      document.getElementById("yes").addEventListener("click", function () {
+        const numeroTelefone = "+5511940314559"; // Insira seu número de telefone
+        const mensagem = "Sim meu gatão, vamos sair!"; // Mensagem pré-definida
+        const url = `https://api.whatsapp.com/send?phone=${numeroTelefone}&text=${encodeURIComponent(
+          mensagem
+        )}`;
         window.location.href = url;
       });
-
-      /**
-       * Gera um número aleatório entre o intervalo mínimo e máximo (inclusivo)
-       * Fonte: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
-       * @param {*} min Número mínimo
-       * @param {*} max Número máximo
-       * @returns Número aleatório entre min e max
-       */
-      function getRandomIntInclusive(min, max) {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min + 1) + min); // O máximo é inclusivo e o mínimo também
-      }
     </script>
   </body>
 </html>
